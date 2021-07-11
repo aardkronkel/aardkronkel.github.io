@@ -78,21 +78,26 @@ window.onload = function() {
     // Initialize the game
     function init() {
         // Load images
-        images = loadImages(["here.png"]);
+        images = loadImages(["here_black.png", "here_blue.png", "here_red.png"]);
     
         // Add mouse events
         canvas.addEventListener("mousemove", onMouseMove);
         canvas.addEventListener("mousedown", onMouseDown);
         canvas.addEventListener("mouseup", onMouseUp);
         canvas.addEventListener("mouseout", onMouseOut);
-        
+
+        // Draw the lemniscate figure https://mathworld.wolfram.com/Lemniscate.html
+        // x = a cos(t)/ (1 + (sin(t))^2)
+        // y = a sin(t) cos(t) / (1 + (sin(t))^2)
+
         // Create random entities
-        for (var i=0; i<15; i++) {
-            var scale = randRange(50, 100);
+        for (var i=0; i<3; i++) {
+            var scale = 100; // randRange(50, 100);
             var imageindex = i % images.length;
             var xdir = 1 - 2 * randRange(0, 1);
             var ydir = 1 - 2 * randRange(0, 1);
-            var entity = new Entity(images[imageindex], 0, 0, scale, scale, xdir, ydir, randRange(100, 400));
+            // var entity = new Entity(images[imageindex], 0, 0, scale, scale, xdir, ydir, randRange(100, 400));
+            var entity = new Entity(images[imageindex], 0, 0, scale, scale, xdir, ydir, 300);
             
             // Set a random position
             entity.x = randRange(0, level.width-entity.width);
