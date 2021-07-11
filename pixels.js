@@ -5,9 +5,6 @@ window.onload = function() {
     
     // Timing and frames per second
     var lastframe = 0;
-    var fpstime = 0;
-    var framecount = 0;
-    var fps = 0;
 
     var initialized = false;
     
@@ -78,7 +75,7 @@ window.onload = function() {
     // Initialize the game
     function init() {
         // Load images
-        images = loadImages(["here_black.png", "here_blue.png", "here_red.png"]);
+        images = loadImages(["here_blue.png", "here_black.png", "here_red.png"]);
     
         // Add mouse events
         canvas.addEventListener("mousemove", onMouseMove);
@@ -86,18 +83,20 @@ window.onload = function() {
         canvas.addEventListener("mouseup", onMouseUp);
         canvas.addEventListener("mouseout", onMouseOut);
 
-        // Draw the lemniscate figure https://mathworld.wolfram.com/Lemniscate.html
-        // x = a cos(t)/ (1 + (sin(t))^2)
-        // y = a sin(t) cos(t) / (1 + (sin(t))^2)
+        var imageindex = 1
 
         // Create random entities
-        for (var i=0; i<3; i++) {
-            var scale = 100; // randRange(50, 100);
-            var imageindex = i % images.length;
+        for (var i=0; i<24; i++) {
+            var scale = 68;
             var xdir = 1 - 2 * randRange(0, 1);
             var ydir = 1 - 2 * randRange(0, 1);
-            // var entity = new Entity(images[imageindex], 0, 0, scale, scale, xdir, ydir, randRange(100, 400));
-            var entity = new Entity(images[imageindex], 0, 0, scale, scale, xdir, ydir, 300);
+
+            if (xdir < 0) {
+                imageindex = 0
+            } else {
+                imageindex = 2
+            }
+            var entity = new Entity(images[imageindex], 0, 0, scale, scale, xdir, ydir, randRange(100, 400));
             
             // Set a random position
             entity.x = randRange(0, level.width-entity.width);
@@ -106,7 +105,13 @@ window.onload = function() {
             // Add to the entities array
             entities.push(entity);
         }
-    
+
+        normal_scale = 200;
+        blue = new Entity(images[1], 0, 0, normal_scale, normal_scale, 0, 0, 0);
+        blue.x = level.width/2-blue.width/2
+        blue.y = level.height/2-blue.height/2
+        entities.push(blue);
+
         // Enter main loop
         main(0);
     }
@@ -130,20 +135,6 @@ window.onload = function() {
             // Draw the frame
             drawFrame();
             
-            // Draw a progress bar
-            // var loadpercentage = loadcount/loadtotal;
-            // context.strokeStyle = "#000000";
-            // context.lineWidth=3;
-            // context.strokeRect(18.5, 0.5 + canvas.height - 51, canvas.width-37, 32);
-            // context.fillStyle = "#000000";
-            // context.fillRect(18.5, 0.5 + canvas.height - 51, loadpercentage*(canvas.width-37), 32);
-            
-            // Draw the progress text
-            // var loadtext = "Loaded " + loadcount + "/" + loadtotal + " images";
-            // context.fillStyle = "#000000";
-            // context.font = "16px monospace";
-            // context.fillText(loadtext, 18, 0.5 + canvas.height - 63);
-            
             if (preloaded) {
                 // Add a delay for demonstration purposes
                 setTimeout(function(){initialized = true;}, 1000);
@@ -159,9 +150,6 @@ window.onload = function() {
     function update(tframe) {
         var dt = (tframe - lastframe) / 1000;
         lastframe = tframe;
-        
-        // Update the fps counter
-        updateFps(dt);
         
         // Update entities
         for (var i=0; i<entities.length; i++) {
@@ -194,22 +182,7 @@ window.onload = function() {
             }
         }
     }
-    
-    function updateFps(dt) {
-        if (fpstime > 0.25) {
-            // Calculate fps
-            fps = Math.round(framecount / fpstime);
-            
-            // Reset time and framecount
-            fpstime = 0;
-            framecount = 0;
-        }
-        
-        // Increase time and framecount
-        fpstime += dt;
-        framecount++;
-    }
-    
+
     // Render the game
     function render() {
         // Draw the frame
