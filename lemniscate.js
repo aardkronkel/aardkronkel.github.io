@@ -6,14 +6,20 @@ window.onload = function() {
     // Timing and frames per second
     var lastframe = 0;
 
+    var period_seconds = 20;
+    var t = 0;
+
+    a = 300.0;
+    b = 107.0;
+
     var initialized = false;
     
     // Level properties
     var level = {
         x: 1,
         y: 65,
-        width: canvas.width - 2,
-        height: canvas.height - 66
+        width: canvas.width, //- 2,
+        height: canvas.height
     };
     
     // Define an entity class
@@ -75,7 +81,7 @@ window.onload = function() {
     // Initialize the game
     function init() {
         // Load images
-        images = loadImages(["here_blue.png", "here_black.png", "here_red.png"]);
+        images = loadImages(["here_blue.png", "lemniscate.png", "here_red.png"]);
     
         // Add mouse events
         canvas.addEventListener("mousemove", onMouseMove);
@@ -86,28 +92,25 @@ window.onload = function() {
         var imageindex = 1
 
         // Create random entities
-        for (var i=0; i<24; i++) {
-            var scale = 68;
-            var xdir = 1 - 2 * randRange(0, 1);
-            var ydir = 1 - 2 * randRange(0, 1);
-
-            if (xdir < 0) {
+        for (var i=0; i<2; i++) {
+            var scale = 100;
+            
+            if (i == 0) {
                 imageindex = 0
+                xdir = -1
+                ydir = -1
             } else {
                 imageindex = 2
+                xdir = 1
+                ydir = 1
             }
             var entity = new Entity(images[imageindex], 0, 0, scale, scale, xdir, ydir, randRange(100, 400));
-            
-            // Set a random position
-            entity.x = randRange(0, level.width-entity.width);
-            entity.y = randRange(0, level.height-entity.height);
             
             // Add to the entities array
             entities.push(entity);
         }
 
-        normal_scale = 200;
-        black = new Entity(images[1], 0, 0, normal_scale, normal_scale, 0, 0, 0);
+        black = new Entity(images[1], 0, 0, 2*a, 2*b, 0, 0, 0);
         black.x = level.width/2-black.width/2
         black.y = level.height/2-black.height/2
         entities.push(black);
@@ -150,36 +153,24 @@ window.onload = function() {
     function update(tframe) {
         var dt = (tframe - lastframe) / 1000;
         lastframe = tframe;
-        
-        // Update entities
-        for (var i=0; i<entities.length; i++) {
+
+        t = (t + dt) 
+        tp = t % period_seconds
+        rtp = (period_seconds-t) % period_seconds
+
+        // Update entities except last one
+        for (var i=0; i<entities.length-1; i++) {
             var entity = entities[i];
             
-            // Move the entity, time-based
-            entity.x += dt * entity.speed * entity.xdir;
-            entity.y += dt * entity.speed * entity.ydir;
-            
-            // Handle left and right collisions with the level
-            if (entity.x <= level.x) {
-                // Left edge
-                entity.xdir = 1;
-                entity.x = level.x;
-            } else if (entity.x + entity.width >= level.x + level.width) {
-                // Right edge
-                entity.xdir = -1;
-                entity.x = level.x + level.width - entity.width;
+            if (i == 0) {
+                ttp = tp
+            } else {
+                ttp = rtp
             }
-            
-            // Handle top and bottom collisions with the level
-            if (entity.y <= level.y) {
-                // Top edge
-                entity.ydir = 1;
-                entity.y = level.y;
-            } else if (entity.y + entity.height >= level.y + level.height) {
-                // Bottom edge
-                entity.ydir = -1;
-                entity.y = level.y + level.height - entity.height;
-            }
+
+            // Draw the lemniscate figure https://mathworld.wolfram.com/Lemniscate.html
+            entity.x = level.width/2 - entity.width/2 + a * Math.cos(ttp) / (1.0 + Math.sin(ttp) * Math.sin(ttp))
+            entity.y = level.height/2 - entity.height/2 + a * Math.sin(ttp) * Math.cos(ttp) / (1.0 + Math.sin(ttp) * Math.sin(ttp))
         }
     }
 
@@ -193,6 +184,8 @@ window.onload = function() {
             var entity = entities[i];
             context.drawImage(entity.image, entity.x, entity.y, entity.width, entity.height);
         }
+
+
     }
     
     // Draw a frame with a border
