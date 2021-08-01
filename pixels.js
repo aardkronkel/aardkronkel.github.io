@@ -102,7 +102,7 @@ window.onload = function () {
             } else {
                 imageindex = 2
             }
-            var entity = new Entity(images[imageindex], 0, 0, scale, scale, xdir, ydir, randRange(100, 400));
+            var entity = new Entity(images[imageindex], 0, 0, 0.7 * scale, scale, xdir, ydir, randRange(100, 400));
 
             // Set a random position
             entity.x = randRange(0, level.width - entity.width);

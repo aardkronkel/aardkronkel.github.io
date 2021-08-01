@@ -81,7 +81,7 @@ window.onload = function () {
     // Initialize the game
     function init() {
         // Load images
-        images = loadImages(["agent_left.svg", "lemniscate.png", "agent_right.svg"]);
+        images = loadImages(["sphere_earthling.png", "sphere_skyprobe.png", "sphere_mindprobe.png", "agent_left.svg"]);
 
         // Add mouse events
         canvas.addEventListener("mousemove", onMouseMove);
@@ -89,31 +89,35 @@ window.onload = function () {
         canvas.addEventListener("mouseup", onMouseUp);
         canvas.addEventListener("mouseout", onMouseOut);
 
-        var imageindex = 1
+        var scale = 500;
+        xdir = 0;
+        ydir = 0;
+        speed = 0;
+        earthling = new Entity(images[0], 0, 0, 0.7*scale, scale, xdir, ydir, speed);
+        earthling.x = level.width / 2 - earthling.width / 2
+        earthling.y = level.height / 2 - earthling.height / 2
+        entities.push(earthling);
 
-        black = new Entity(images[1], 0, 0, 2 * a, 2 * b, 0, 0, 0);
-        black.x = level.width / 2 - black.width / 2
-        black.y = level.height / 2 - black.height / 2
-        entities.push(black);
+        scale = 500;
+        xdir = -1;
+        ydir = -1;
+        speed = 100;
+        skyprobe = new Entity(images[1], 0, 0, 0.7*scale, scale, xdir, ydir, speed);
+        entities.push(skyprobe);
 
-        // Create random entities
-        for (var i = 0; i < 2; i++) {
-            var scale = 200;
+        scale = 700;
+        xdir = -1;
+        ydir = -1;
+        speed = 100;
+        mindprobe = new Entity(images[2], 0, 0, 0.7*scale, scale, xdir, ydir, speed);
+        entities.push(mindprobe);
 
-            if (i == 0) {
-                imageindex = 0
-                xdir = -1
-                ydir = -1
-            } else {
-                imageindex = 2
-                xdir = 1
-                ydir = 1
-            }
-            var entity = new Entity(images[imageindex], 0, 0, 0.7 * scale, scale, xdir, ydir, randRange(100, 400));
-
-            // Add to the entities array
-            entities.push(entity);
-        }
+        scale = 200;
+        xdir = 0;
+        ydir = 0;
+        speed = 0;
+        agent = new Entity(images[3], 0, 0, 0.7*scale, scale, xdir, ydir, speed);
+        entities.push(agent);
 
         // Enter main loop
         main(0);
@@ -158,19 +162,20 @@ window.onload = function () {
         tp = t % period_seconds
         rtp = (period_seconds - t) % period_seconds
 
-        // Update entities except last one
+        // Update entities except first one
         for (var i = 1; i < entities.length; i++) {
             var entity = entities[i];
 
             if (i == 1) {
+                radius = 0.10 * a
                 ttp = tp
             } else {
+                radius = 0.50 * a
                 ttp = rtp
             }
 
-            // Draw the lemniscate figure https://mathworld.wolfram.com/Lemniscate.html
-            entity.x = level.width / 2 - entity.width / 2 + a * Math.cos(ttp) / (1.0 + Math.sin(ttp) * Math.sin(ttp))
-            entity.y = level.height / 2 - entity.height / 2 + a * Math.sin(ttp) * Math.cos(ttp) / (1.0 + Math.sin(ttp) * Math.sin(ttp))
+            entity.x = level.width / 2 - entity.width / 2 + radius * Math.cos(ttp)
+            entity.y = level.height / 2 - entity.height / 2 + radius * Math.sin(ttp)
         }
     }
 
@@ -207,15 +212,6 @@ window.onload = function () {
     function onMouseDown(e) { }
     function onMouseUp(e) { }
     function onMouseOut(e) { }
-
-    // Get the mouse position
-    function getMousePos(canvas, e) {
-        var rect = canvas.getBoundingClientRect();
-        return {
-            x: Math.round((e.clientX - rect.left) / (rect.right - rect.left) * canvas.width),
-            y: Math.round((e.clientY - rect.top) / (rect.bottom - rect.top) * canvas.height)
-        };
-    }
 
     // Call init to start the game
     init();
