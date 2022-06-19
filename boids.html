@@ -10,102 +10,14 @@
     <meta name="author" content="earthboundworm" />
     <meta http-equiv="content-language" content="en" />
     <script type="text/javascript" src="pixi.min.js"></script>
+    <script type="text/javascript" src="boids.js"></script>
+    <link rel="icon" href="https://earthboundworm.github.io/favicon.png">
 </head>
 
 <body>
-    <script>
-        const app = new PIXI.Application({
-    width: 800, height: 600, backgroundColor: 0xffffff, resolution: window.devicePixelRatio || 1,
-});
-document.body.appendChild(app.view);
-
-// Create a new texture
-const texture = PIXI.Texture.from('agent.png');
-const maxSpeed = 10.0;
-
-class Boid {
-  constructor(step, app, texture) {
-    this.angle = 0;
-    this.x = app.screen.width/2 + step;
-    this.y = app.screen.height/2 - step;
-    this.velocityx = Math.floor(Math.random() * 11);
-    this.velocityy = Math.floor(Math.random() * 11);
-    this.accelerationx = Math.floor(Math.random() * 11);
-    this.accelerationy = Math.floor(Math.random() * 11);
-
-    this.sprite = new PIXI.Sprite(texture);
-    this.sprite.x = this.x;
-    this.sprite.y = this.y;
-
-    app.stage.addChild(this.sprite);
-  }
-
-  rotate(angle) {
-      this.angle = angle;
-      this.sprite.rotate = angle;
-  }
-
-  apply_behavior(flock) {
-
-  }
-      
-  update(delta) {
-      this.x += delta * this.velocityx * Math.floor(Math.random() * 11);
-      this.y += delta * this.velocityy * Math.floor(Math.random() * 11);
-
-      this.velocityx += delta * this.accelerationx * Math.floor(Math.random() * 11);
-      this.velocityy += delta * this.accelerationy * Math.floor(Math.random() * 11);
-
-      const normSpeed = Math.sqrt(this.velocityx*this.velocityx* + this.velocityy*this.velocityy);
-      if (normSpeed > maxSpeed) {
-        this.velocityx = this.velocityx * maxSpeed/normSpeed;
-        this.velocityy = this.velocityy * maxSpeed/normSpeed;
-      }
-
-      this.accelerationx = 0.0;
-      this.accelerationy = 0.0;
-
-      this.rotate(this.angle - 0.01 * delta);
-
-      this.sprite.x = this.x;
-      this.sprite.y = this.y;
-  }
-
-  edges() {
-    if (this.x > app.screen.width) {
-        this.x = 0;
-    } else if (this.x < 0) {
-        this.x = app.screen.width;
-    }
-    if (this.y > app.screen.height) {
-        this.y = 0;
-    } else if (this.y < 0) {
-        this.y = app.screen.width;
-    }
-
-    this.sprite.x = this.x;
-    this.sprite.y = this.y;
-  }
-}
-
-const flock = [];
-for (let step = 0; step < 5; step++) {
-    const boid = new Boid(step, app, texture);
-    flock.push(boid)
-}
-
-// Listen for animate update
-app.ticker.add((delta) => {
-
-    for (const boid of flock) {
-        boid.apply_behavior(flock)
-        boid.update(delta);
-        boid.edges();
-    }
-
-});
-
-    </script>
+    <div>
+        <canvas id="viewport" style="display: block; margin: 0 auto; padding-left: 0; padding-right: 0; border-width: 1px;"></canvas>
+    </div>
     <div>
         <a href="https://earthboundworm.github.io">&#8709;</a>
     </div>
@@ -116,7 +28,7 @@ app.ticker.add((delta) => {
         <a href="https://earthboundworm.github.io/boids">&searrow;</a>
     </div>
     <div>
-        <a href="https://earthboundworm.github.io/spheres">&#9775;</a>
+        <a href="https://earthboundworm.github.io/circles">&#9775;</a>
     </div>
 </body>
 
