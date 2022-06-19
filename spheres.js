@@ -6,7 +6,7 @@ window.onload = function () {
     // Timing and frames per second
     var lastframe = 0;
 
-    var period_seconds = 20;
+    var period_seconds = 20000;
     var t = 0;
 
     a = 300.0;
@@ -18,21 +18,23 @@ window.onload = function () {
     var level = {
         x: 1,
         y: 65,
-        width: canvas.width, //- 2,
+        width: canvas.width,
         height: canvas.height
     };
 
     // Define an entity class
-    var Entity = function (image, x, y, width, height, xdir, ydir, speed) {
-        this.image = image;
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.xdir = xdir;
-        this.ydir = ydir;
-        this.speed = speed;
-    };
+    class Entity {
+        constructor(image, x, y, width, height, xdir, ydir, speed) {
+            this.image = image;
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.xdir = xdir;
+            this.ydir = ydir;
+            this.speed = speed;
+        }
+    }
 
     // Array of entities
     var entities = [];
@@ -81,7 +83,7 @@ window.onload = function () {
     // Initialize the game
     function init() {
         // Load images
-        images = loadImages(["sphere_earthling.png", "sphere_skyprobe.png", "sphere_mindprobe.png", "agent_left.svg"]);
+        images = loadImages(["agent_left.svg", "agent_right.svg"]);
 
         // Add mouse events
         canvas.addEventListener("mousemove", onMouseMove);
@@ -89,43 +91,35 @@ window.onload = function () {
         canvas.addEventListener("mouseup", onMouseUp);
         canvas.addEventListener("mouseout", onMouseOut);
 
-        var scale = 500;
+        var scale = 150;
+        var selected_image = images[0];
+
         xdir = 0;
         ydir = 0;
         speed = 0;
-        earthling = new Entity(images[0], 0, 0, 0.7*scale, scale, xdir, ydir, speed);
-        earthling.x = level.width / 2 - earthling.width / 2
-        earthling.y = level.height / 2 - earthling.height / 2
+        earthling = new Entity(selected_image, 0, 0, 0.7*scale, scale, xdir, ydir, speed);
+        earthling.x = level.width / 2 - earthling.width / 2;
+        earthling.y = level.height / 2 - earthling.height / 2;
         entities.push(earthling);
 
-        scale = 500;
-        xdir = -1;
-        ydir = -1;
-        speed = 100;
-        skyprobe = new Entity(images[1], 0, 0, 0.7*scale, scale, xdir, ydir, speed);
-        entities.push(skyprobe);
+        for (var i = 1; i < 8; i++) {
+            if (i % 2 === 0) {
+                selected_image = images[1];
+                xdir = 1;
+                ydir = 1;
+            } else {
+                selected_image = images[0];
+                xdir = -1;
+                ydir = -1;
+            }
 
-        scale = 700;
-        xdir = -1;
-        ydir = -1;
-        speed = 100;
-        mindprobe = new Entity(images[2], 0, 0, 0.7*scale, scale, xdir, ydir, speed);
-        entities.push(mindprobe);
-
-        scale = 200;
-        xdir = 0;
-        ydir = 0;
-        speed = 0;
-        agent = new Entity(images[3], 0, 0, 0.7*scale, scale, xdir, ydir, speed);
-        entities.push(agent);
+            speed = 200 * i;
+            agent = new Entity(selected_image, 0, 0, 0.7*scale, scale, xdir, ydir, speed);
+            entities.push(agent);
+        }
 
         // Enter main loop
         main(0);
-    }
-
-    // Get a random int between low and high, inclusive
-    function randRange(low, high) {
-        return Math.floor(low + Math.random() * (high - low + 1));
     }
 
     // Main loop
@@ -144,7 +138,7 @@ window.onload = function () {
 
             if (preloaded) {
                 // Add a delay for demonstration purposes
-                setTimeout(function () { initialized = true; }, 1000);
+                setTimeout(function () { initialized = true; }, 100);
             }
         } else {
             // Update and render the game
@@ -157,24 +151,26 @@ window.onload = function () {
     function update(tframe) {
         var dt = (tframe - lastframe) / 1000;
         lastframe = tframe;
+    
+        t = (t + dt);
+        tp = t % period_seconds;
+        rtp = (period_seconds - t) % period_seconds;
 
-        t = (t + dt)
-        tp = t % period_seconds
-        rtp = (period_seconds - t) % period_seconds
+        console.log(t / period_seconds, tp, rtp);
 
         // Update entities except first one
         for (var i = 1; i < entities.length; i++) {
             var entity = entities[i];
 
-            if (i == 1) {
-                radius = 0.10 * a
-                ttp = tp
-            } else {
-                radius = 0.50 * a
-                ttp = rtp
-            }
+            radius = 15 + 0.15 * i * a;
 
-            entity.x = level.width / 2 - entity.width / 2 + radius * Math.cos(ttp)
+            if (i % 2 === 0) {
+                ttp = tp;
+            } else {
+                ttp = rtp;
+            } 
+
+            entity.x = level.width / 2 - entity.width / 2 + radius * Math.cos(ttp);
             entity.y = level.height / 2 - entity.height / 2 + radius * Math.sin(ttp)
         }
     }
@@ -201,10 +197,6 @@ window.onload = function () {
         context.fillStyle = "#ffffff";
         context.fillRect(1, 1, canvas.width - 2, canvas.height - 2);
 
-        // Draw title
-        // context.fillStyle = "#000000";
-        // context.font = "24px monospace";
-        // context.fillText("q R here", 10, 30);
     }
 
     // Mouse event handlers
@@ -213,6 +205,5 @@ window.onload = function () {
     function onMouseUp(e) { }
     function onMouseOut(e) { }
 
-    // Call init to start the game
     init();
 };

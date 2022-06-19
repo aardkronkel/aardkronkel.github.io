@@ -6,7 +6,7 @@ window.onload = function () {
     // Timing and frames per second
     var lastframe = 0;
 
-    var period_seconds = 20;
+    var period_seconds = 20000;
     var t = 0;
 
     a = 300.0;
@@ -140,7 +140,7 @@ window.onload = function () {
 
             if (preloaded) {
                 // Add a delay for demonstration purposes
-                setTimeout(function () { initialized = true; }, 1000);
+                setTimeout(function () { initialized = true; }, 100);
             }
         } else {
             // Update and render the game
