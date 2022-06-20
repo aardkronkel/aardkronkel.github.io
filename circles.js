@@ -28,7 +28,7 @@ window.onload = function () {
             texture = texture_right;
         }
         this.angle = 0;
-        this.x = app.screen.width/2 ;
+        this.x = app.screen.width/2;
         this.y = app.screen.height/2;
 
         this.sprite = new PIXI.Sprite(texture);
