@@ -3,20 +3,20 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>wind</title>
-    <meta name="description" content="wind" />
-    <meta name="keywords" content="wind" />
+    <title>refresh</title>
+    <meta name="description" content="refresh" />
+    <meta name="keywords" content="refresh" />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="earthboundworm" />
     <meta http-equiv="content-language" content="en" />
-    <script type="text/javascript" src="pixi.min.js"></script>
-    <script type="text/javascript" src="wind.js"></script>
     <link rel="icon" href="https://earthboundworm.github.io/favicon.png">
 </head>
 
 <body>
-    <div>
-        <canvas id="viewport" style="display: block; margin: 0 auto; padding-left: 0; padding-right: 0; border-width: 1px;"></canvas>
+    <canvas id="viewport" width=800 height=800 style="display: block; margin: 0 auto;"></canvas>
+    <div style="display:none;">
+        <img id="agent_left" src="agent_left.png">
+        <img id="agent_right" src="agent_right.png">
     </div>
     <div>
         <a href="https://earthboundworm.github.io">&#8709;</a>
@@ -33,6 +33,7 @@
     <div>
         <a href="https://earthboundworm.github.io/refresh">&#8635;</a>
     </div>
+    <script type="text/javascript" src="refresh.js"></script>
 </body>
 
 </html>

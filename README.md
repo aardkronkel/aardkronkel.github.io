@@ -6,3 +6,4 @@ Ingredients for earthboundworm's Github pages:
 * [&#8734;](https://earthboundworm.github.io/lemniscate)
 * [&searrow;](https://earthboundworm.github.io/boids)
 * [&#9775;](https://earthboundworm.github.io/circles)
+* [&#8635;](https://earthboundworm.github.io/refresh)
