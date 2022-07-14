@@ -25,9 +25,9 @@ class Vector {
 
 class Agent {
 	constructor(x, y) {
-        const vx = 0;
-        const vy = 1;
-
+        const vx = -1 + Math.random() * 2;
+        const vy = -1 + Math.random() * 2;
+    
 		this.pos = new Vector(x, y);
 		this.vel = new Vector(vx, vy);
 	}
@@ -74,6 +74,25 @@ function init() {
 function update() {
     context.fillStyle = 'white';
     context.fillRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = 0; i < agents.length; i++) {
+        const agent = agents[i];
+
+        for (let j = i + 1; j < agents.length; j++) {
+            const other = agents[j];
+
+            const dist = agent.pos.getDistance(other.pos);
+
+            if (dist > 150) continue;
+
+            context.lineWidth = 0.1 + 2 * (dist / 150);
+
+            context.beginPath();
+            context.moveTo(agent.pos.x, agent.pos.y);
+            context.lineTo(other.pos.x, other.pos.y);
+            context.stroke();
+        }
+    }
 
     agents.forEach(agent => {
         agent.update();
