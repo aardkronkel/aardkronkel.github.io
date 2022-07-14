@@ -7,3 +7,4 @@ Ingredients for earthboundworm's Github pages:
 * [&searrow;](https://earthboundworm.github.io/boids)
 * [&#9775;](https://earthboundworm.github.io/circles)
 * [&#8635;](https://earthboundworm.github.io/refresh)
+* [/](https://earthboundworm.github.io/agents)
