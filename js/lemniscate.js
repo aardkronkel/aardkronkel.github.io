@@ -53,7 +53,10 @@ function loadImages(imagefiles) {
 }
 
 function init() {
-    images = loadImages(["agent_left.svg", "lemniscate.png", "agent_right.svg"]);
+    images = loadImages([
+        "../images/agent_left.svg", 
+        "../images/lemniscate.png", 
+        "../images/agent_right.svg"]);
 
     let imageindex = 1;
 

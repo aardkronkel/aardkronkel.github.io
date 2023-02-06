@@ -75,7 +75,10 @@ window.onload = function () {
     // Initialize the game
     function init() {
         // Load images
-        images = loadImages(["agent_left.svg", "here_black.png", "agent_right.svg"]);
+        images = loadImages([
+            "images/agent_left.svg", 
+            "images/here_black.png", 
+            "images/agent_right.svg"]);
 
         // Add mouse events
         canvas.addEventListener("mousemove", onMouseMove);
@@ -202,11 +205,6 @@ window.onload = function () {
         context.fillRect(0, 0, canvas.width, canvas.height);
         context.fillStyle = "#ffffff";
         context.fillRect(1, 1, canvas.width - 2, canvas.height - 2);
-
-        // Draw title
-        // context.fillStyle = "#000000";
-        // context.font = "24px monospace";
-        // context.fillText("q R here", 10, 30);
     }
 
     // Mouse event handlers

@@ -1,8 +1,8 @@
 const canvas = document.getElementById("viewport");
 const context = canvas.getContext("2d");
 
-const agent_left = document.getElementById('agent_left');
-const agent_right = document.getElementById('agent_right');
+const agent_left = document.getElementById('../images/agent_left');
+const agent_right = document.getElementById('../images/agent_right');
 let image;
 
 const num_agents = 3;
@@ -50,7 +50,7 @@ class Agent {
 		this.pos.x += this.vel.x;
 		this.pos.y += this.vel.y;
 	}
-
+    ../images/
 	draw(context) {
         if (this.vel.x < 0) {
             image = agent_left;

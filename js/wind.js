@@ -10,8 +10,8 @@ window.onload = function () {
     var count = 0;
 
     // Create a new texture
-    const texture_left = PIXI.Texture.from("agent_left.png");
-    const texture_right = PIXI.Texture.from("agent_right.png");
+    const texture_left = PIXI.Texture.from("../images/agent_left.png");
+    const texture_right = PIXI.Texture.from("../images/agent_right.png");
     var texture = texture_left;
     const width = 160;
     const height = 119;

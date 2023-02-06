@@ -3,8 +3,8 @@
 Ingredients for earthboundworm's Github pages:
 
 * [&#8709;](https://earthboundworm.github.io)
-* [&#8734;](https://earthboundworm.github.io/lemniscate)
-* [&searrow;](https://earthboundworm.github.io/boids)
-* [&#9775;](https://earthboundworm.github.io/circles)
-* [&#8635;](https://earthboundworm.github.io/refresh)
-* [/](https://earthboundworm.github.io/agents)
+* [&#8734;](https://earthboundworm.github.io/lemniscate.html)
+* [&searrow;](https://earthboundworm.github.io/boids.html)
+* [&#9775;](https://earthboundworm.github.io/circles.html)
+* [&#8635;](https://earthboundworm.github.io/refresh.html)
+* [/](https://earthboundworm.github.io/agents.html)
