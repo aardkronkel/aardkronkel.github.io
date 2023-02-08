@@ -50,7 +50,7 @@ class Agent {
 		this.pos.x += this.vel.x;
 		this.pos.y += this.vel.y;
 	}
-    ../images/
+
 	draw(context) {
         if (this.vel.x < 0) {
             image = agent_left;
