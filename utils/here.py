@@ -2,19 +2,18 @@
 
 """
 Usage:
-    virtualenv venv
-    source venv/Scripts/activate
-    pip install -r requirements.txt
+    python -m pip install virtualenv
+    python -m virtualenv venv
+    .\venv\Scripts\activate.bat
+    python -m pip install -r requirements.txt
     python here.py
 
 """
-
 
 import qrcode
 
 URL = "https://earthboundworm.github.io"
 OUTPUT_FILE = "here.png"
-
 
 def main():
     qr = qrcode.QRCode(
@@ -30,5 +29,5 @@ def main():
     img.save(OUTPUT_FILE)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
