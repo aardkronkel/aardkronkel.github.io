@@ -1,6 +1,6 @@
 # aardkronkel.github.io
 
-Ingredients for earthboundworm's Github pages:
+Ingredients for aardkronkel's Github pages:
 
 * [&#8709;](https://aardkronkel.github.io)
 * [&#8734;](https://aardkronkel.github.io/html/lemniscate.html)
