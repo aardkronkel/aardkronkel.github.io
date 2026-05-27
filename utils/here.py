@@ -2,17 +2,17 @@
 
 """
 Usage:
-    python -m pip install virtualenv
-    python -m virtualenv venv
-    .\venv\Scripts\activate.bat
-    python -m pip install -r requirements.txt
-    python here.py
+    python3 -m venv .venv
+    source .venv/bin/activate
+    python3 -m pip install -r requirements.txt
+    python3 here.py
+    deactivate
 
 """
 
 import qrcode
 
-URL = "https://earthboundworm.github.io"
+URL = "https://aardkronkel.github.io"
 OUTPUT_FILE = "here.png"
 
 def main():
@@ -25,7 +25,7 @@ def main():
     qr.add_data(URL)
     qr.make(fit=True)
 
-    img = qr.make_image(fill_color="black", back_color="white")
+    img = qr.make_image(fill_color="blue", back_color="white")
     img.save(OUTPUT_FILE)
 
 
