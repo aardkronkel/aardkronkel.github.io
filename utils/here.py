@@ -25,7 +25,7 @@ def main():
     qr.add_data(URL)
     qr.make(fit=True)
 
-    img = qr.make_image(fill_color="blue", back_color="white")
+    img = qr.make_image(fill_color="black", back_color="white")
     img.save(OUTPUT_FILE)
 
 
