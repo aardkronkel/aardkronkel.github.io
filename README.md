@@ -8,3 +8,4 @@ Ingredients for aardkronkel's Github pages:
 * [&#9775;](https://aardkronkel.github.io//html/circles.html)
 * [&#8635;](https://aardkronkel.github.io/html/refresh.html)
 * [/](https://aardkronkel.github.io/html/agents.html)
+* [&#126;](https://aardkronkel.github.io/html/wind.html)
